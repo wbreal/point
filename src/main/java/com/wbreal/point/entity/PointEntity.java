@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Table(schema = "musinsadb" ,name="point")
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PointEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -31,8 +33,8 @@ public class PointEntity {
 	@Column(name = "parent_seq")
 	private Long parentSeq;
 
+	@Enumerated(value = EnumType.STRING)
 	@Column(name = "action_type")
-	@Getter
 	private PointActionType pointActionType;
 
 	@Column(name = "regist_date")

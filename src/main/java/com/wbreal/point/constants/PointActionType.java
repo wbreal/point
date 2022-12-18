@@ -1,5 +1,6 @@
 package com.wbreal.point.constants;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,5 +12,14 @@ public enum PointActionType {
     SAVE("적립");
 
     private String text;
+
+    @JsonCreator
+    public static PointActionType getInstance(String s) {
+        try {
+            return PointActionType.valueOf(s);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            return null;
+        }
+    }
 
 }
