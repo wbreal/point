@@ -37,7 +37,7 @@ public class MemberPointController {
 	// > 회원별 포인트 적립/사용 내역 조회 (페이징 처리 필수, 사용 취소된 내역은 조회되지 않음)
 	@GetMapping("/{memberId}/points")
 	public ResponseEntity<Point> getPoints(@PathVariable final Long memberId,
-										   @PageableDefault(size = 20, sort = "update_date", direction = Sort.Direction.DESC) Pageable pageable) {
+										   @PageableDefault(size = 20, sort = "seq", direction = Sort.Direction.DESC) Pageable pageable) {
 		this.isMember(memberId);
 		pointService.getPoints(memberId, pageable);
 
