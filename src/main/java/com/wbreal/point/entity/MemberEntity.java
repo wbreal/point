@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @ToString
 @Entity
-@Table(schema = "pointdb" ,name="member_entity")
+@Table(schema = "musinsadb" ,name="member")
 public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

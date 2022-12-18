@@ -29,7 +29,7 @@ public class MemberPointController {
 	// 회원 별 적립금 합계는 마이너스가 될 수 없음
 	@GetMapping("/{memberId}/point")
 	public ResponseEntity<Point> getPoint(@PathVariable final Long memberId){
-		this.isMember(memberId); // 인터셉터 귀찮
+		this.isMember(memberId);
 		Point point = pointService.getPoint(memberId);
 		return ResponseEntity.ok(point);
 	}

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,16 +20,15 @@ public class PointService {
     private final PointRepository pointRepository;
 
     public Point getPoint(Long memberId) {
-        List<PointEntity> pointEntityList = pointRepository.findPointEntitiesByMemberId(memberId);
-        log.info("pointEntityList :::: {}", pointEntityList.stream().toList());
-        Point point = new Point();
-        point.setPoint(pointEntityList.stream().mapToInt(PointEntity::getPoint).sum());
-        log.info("point :::: {}", point.toString());
+        List<PointEntity> pointEntities = pointRepository.findAllPointByMemberId(memberId);
+        point.setPoint(pointEntities.stream().map(entity->Point.convertTo(entity).getPoint()).reduce(BigDecimal.ZERO, BigDecimal::add));
         Point.isAvailable(point);
         return point;
     }
 
     public List<Point> getPoints(Long memberId, Pageable pageable) {
-        return null;
+        List<Point> points = pointRepository.findAllPointByMemberIdOrderBySeqDesc(memberId,pageable).stream().map(pointEntity -> Point.convertTo(pointEntity)).collect(Collectors.toUnmodifiableList());
+
+        return points;
     }
 }
