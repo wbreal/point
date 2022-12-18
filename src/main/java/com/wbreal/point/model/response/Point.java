@@ -20,6 +20,6 @@ public class Point {
 	private Integer point;
 
 	public static void isAvailable(Point point) {
-		if (point.getPoint() < NumberUtils.INTEGER_ZERO) throw new IllegalStateException("포인트 조회 오류 시스템 문의 필요");
+		if (point.getPoint() < NumberUtils.INTEGER_ZERO) throw new IllegalArgumentException("포인트 조회 오류 시스템 문의 필요");
 	}
 }

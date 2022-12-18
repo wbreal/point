@@ -6,6 +6,7 @@ import com.wbreal.point.model.response.Point;
 import com.wbreal.point.repository.PointRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,5 +26,9 @@ public class PointService {
         log.info("point :::: {}", point.toString());
         Point.isAvailable(point);
         return point;
+    }
+
+    public List<Point> getPoints(Long memberId, Pageable pageable) {
+        return null;
     }
 }

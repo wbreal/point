@@ -22,15 +22,14 @@ public class MemberPointController {
 
 	// todo : Unit test 및 Integration test 작성
 
+	private void isMember(Long memberId) {
+		if (memberService.getMemberEntity(memberId) == null) throw new IllegalStateException("존재하지 않음");
+	}
 	// 회원별 포인트 합계 조회
 	// 회원 별 적립금 합계는 마이너스가 될 수 없음
 	@GetMapping("/{memberId}/point")
 	public ResponseEntity<Point> getPoint(@PathVariable final Long memberId){
-		MemberEntity memberEntity = memberService.getMemberEntity(memberId);
-		log.info("memberEntity :::: {}", memberEntity.toString());
-		if (memberEntity == null) throw new IllegalStateException("존재하지 않음");
-		//todo : 4xx 처리
-
+		this.isMember(memberId); // 인터셉터 귀찮
 		Point point = pointService.getPoint(memberId);
 		return ResponseEntity.ok(point);
 	}
@@ -39,7 +38,9 @@ public class MemberPointController {
 	@GetMapping("/{memberId}/points")
 	public ResponseEntity<Point> getPoints(@PathVariable final Long memberId,
 										   @PageableDefault(size = 20, sort = "update_date", direction = Sort.Direction.DESC) Pageable pageable) {
-		Point point = null;
+		this.isMember(memberId);
+		pointService.getPoints(memberId, pageable);
+
 		return ResponseEntity.ok().build();
 	}
 
