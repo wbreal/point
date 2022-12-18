@@ -14,6 +14,7 @@ CREATE TABLE pointdb.point_entity
 (
     point_id BIGINT NOT NULL AUTO_INCREMENT,
     member_id BIGINT NOT NULL,
+    point BiGINT NOT NULL,
     status BIGINT NOT NULL,
     registration_date DATE NOT NULL,
     update_date DATE NOT NULL,

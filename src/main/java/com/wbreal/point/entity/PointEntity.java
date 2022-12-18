@@ -23,6 +23,10 @@ public class PointEntity {
 	@Getter
 	private Integer point;
 
+	@Column(name = "status")
+	@Getter
+	private Integer status;
+
 	@Column(name = "registration_date")
 	private LocalDate registrationDate;
 

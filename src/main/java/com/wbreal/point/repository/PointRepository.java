@@ -13,6 +13,4 @@ public interface PointRepository extends JpaRepository<PointEntity, Long> {
 
     List<PointEntity> findPointEntitiesByMemberId(Long memberId);
 
-//    public MemberEntity findAllByMemberId
-
 }
