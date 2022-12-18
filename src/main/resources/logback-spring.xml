@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{40}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}</pattern>
+      <charset>utf8</charset>
+    </encoder>
+  </appender>
+
+
+  <logger name="org.springframework.web" level="DEBUG"/>
+  <logger name="org.springframework.web.servlet.handler" level="INFO"/>
+  <logger name="org.hibernate.SQL" level="DEBUG"/>
+  <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+  <logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"/>
+
+  <logger name="com.wbreal.point" level="INFO"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+  <jmxConfigurator/>
+</configuration>
