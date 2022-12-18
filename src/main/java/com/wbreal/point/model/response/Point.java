@@ -1,12 +1,9 @@
 package com.wbreal.point.model.response;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,9 +11,9 @@ import java.util.List;
 @ToString
 public class Point {
 	private Long seq;
-	@NotNull
+
 	private Long memberId;
-	@PositiveOrZero
+
 	private BigDecimal point;
 
 	private BigDecimal remainPoint;

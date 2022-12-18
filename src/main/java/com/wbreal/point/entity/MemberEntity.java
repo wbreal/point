@@ -14,7 +14,7 @@ public class MemberEntity {
 	@Column(name = "member_id")
 	private Long memberId;
 
-	@Column(name = "registration_date")
+	@Column(name = "regist_date")
 	private LocalDate registrationDate;
 
 	@Column(name = "update_date")

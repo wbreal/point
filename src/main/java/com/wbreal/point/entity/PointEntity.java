@@ -1,9 +1,7 @@
 package com.wbreal.point.entity;
 
 import com.wbreal.point.constants.PointActionType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
