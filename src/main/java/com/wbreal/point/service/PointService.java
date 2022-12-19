@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +24,12 @@ public class PointService {
     }
 
     public List<PointResponse> getPoints(final Long memberId, Pageable pageable) {
-        return pointRepository.findAllPointByMemberIdOrderBySeqDesc(memberId, pageable).stream().map(pointEntity -> PointResponse.convertTo(pointEntity)).collect(Collectors.toUnmodifiableList());
+        List<PointResponse> list = new ArrayList<>();
+        for (PointEntity pointEntity : pointRepository.findAllPointByMemberIdOrderBySeqDesc(memberId, pageable)) {
+            PointResponse pointResponse = PointResponse.convertTo(pointEntity);
+            list.add(pointResponse);
+        }
+        return list;
     }
 
     public PointEntity postPoint(Long memberId, PointRequest pointRequest) {

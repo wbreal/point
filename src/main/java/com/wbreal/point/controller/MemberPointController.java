@@ -21,15 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class MemberPointController {
-    private final MemberService memberService;
     private final PointService pointService;
-
-    // todo : Unit test 및 Integration test 작성
-
-    private void isMember(Long memberId) {
-        // todo : valid 로
-        if (memberService.getMemberEntity(memberId) == null) throw new IllegalStateException("신규가입 필요");
-    }
 
     // 회원별 포인트 합계 조회
     // 회원 별 적립금 합계는 마이너스가 될 수 없음
@@ -53,14 +45,6 @@ public class MemberPointController {
                                                    @RequestBody @Validated PointRequest pointRequest) {
         return ResponseEntity.ok(PointResponse.convertTo(pointService.postPoint(memberId, pointRequest)));
     }
-
-    // 회원별 포인트 사용
-    // 포인트 사용시 우선순위는 먼저 적립된 순서로 사용
-    // 적립된 포인트를 사용한다는 개념으로 PUT을 사용했으나 실제 데이터 관리는 insert
-//    @PutMapping("/{memberId}/point/{usePoint}")
-//    public ResponseEntity<PointResponse> putPoint(@PathVariable final Long memberId, @PathVariable final BigDecimal usePoint) {
-//        return ResponseEntity.ok(PointResponse.convertTo(pointService.putPoint(memberId, usePoint)));
-//    }
 
     // 회원별 포인트 사용취소 API 개발 (포인트 사용 api 호출하는 쪽에서 rollback 처리를 위한 용도)
     @DeleteMapping("/{memberId}/point/{usedPointSequence}")
