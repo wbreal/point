@@ -28,4 +28,8 @@ public class MemberService {
 		return memberRepository.findByMemberId(memberId);
 	}
 
+	public boolean existsById(Long memberId) {
+		return memberRepository.existsById(memberId);
+	}
+
 }

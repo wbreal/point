@@ -10,6 +10,4 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
     MemberEntity findByMemberId(Long memberId);
 
-//    public MemberEntity findAllByMemberId
-
 }

@@ -14,16 +14,11 @@ import java.util.List;
 @Repository
 public interface PointRepository extends JpaRepository<PointEntity, Long> {
 
-    @Query(value = "select sum(p.remain_point) as availablePoint "
-            + "from musinsadb.point p "
-            + "where p.member_id = :memberId "
-            + "group by p.member_id ", nativeQuery = true)
-    BigDecimal findRemainPointByMemberIdGroupByMemberId(@Param("memberId") final Long memberId);
+    @Query(value = "SELECT sum(p.remain_point) AS remain_point " +
+                     "FROM musinsadb.point p " +
+                    "WHERE p.member_id = :memberId", nativeQuery = true)
+    BigDecimal findRemainPointByMemberId(@Param("memberId") final Long memberId);
 
     List<PointEntity> findAllPointByMemberIdOrderBySeqDesc(final Long memberId, final Pageable pageable);
-
-
-
-
 
 }

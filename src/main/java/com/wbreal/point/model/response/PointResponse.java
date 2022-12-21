@@ -7,10 +7,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
 @Builder
+@Getter
 public class PointResponse {
     private Long seq;
 
@@ -44,9 +46,4 @@ public class PointResponse {
                 .build();
     }
 
-    public static PointResponse of(final Long seq) {
-        return PointResponse.builder()
-                .seq(seq)
-                .build();
-    }
 }

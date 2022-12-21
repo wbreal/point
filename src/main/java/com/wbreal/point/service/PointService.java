@@ -3,13 +3,14 @@ package com.wbreal.point.service;
 import com.wbreal.point.entity.PointEntity;
 import com.wbreal.point.model.request.PointRequest;
 import com.wbreal.point.model.response.PointResponse;
+import com.wbreal.point.model.response.RemainPointResponse;
 import com.wbreal.point.repository.PointRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,29 +20,25 @@ import java.util.List;
 public class PointService {
     private final PointRepository pointRepository;
 
-    public BigDecimal getRemainPoint(final Long memberId) {
-        return pointRepository.findRemainPointByMemberIdGroupByMemberId(memberId);
+    public RemainPointResponse getRemainPoint(final Long memberId) {
+        return RemainPointResponse.convertTo(pointRepository.findRemainPointByMemberId(memberId));
     }
 
     public List<PointResponse> getPoints(final Long memberId, Pageable pageable) {
-        List<PointResponse> list = new ArrayList<>();
+        List<PointResponse> pointResponses = new ArrayList<>();
         for (PointEntity pointEntity : pointRepository.findAllPointByMemberIdOrderBySeqDesc(memberId, pageable)) {
             PointResponse pointResponse = PointResponse.convertTo(pointEntity);
-            list.add(pointResponse);
+            pointResponses.add(pointResponse);
         }
-        return list;
+        if (CollectionUtils.isEmpty(pointResponses)) return null;
+        return pointResponses;
     }
 
-    public PointEntity postPoint(Long memberId, PointRequest pointRequest) {
-        return pointRepository.save(
-                PointEntity.builder()
-                        .memberId(memberId)
-                        .pointActionType(pointRequest.getPointActionType())
-                        .point(pointRequest.getPoint())
-                        .build());
+    public PointResponse postPoint(Long memberId, PointRequest pointRequest) {
+        return PointResponse.convertTo(pointRepository.save(PointEntity.convertTo(memberId, pointRequest)));
     }
 
-    public void deletePoint(Long usedPointSequence) {
-        pointRepository.deleteById(usedPointSequence);
+    public void deletePoint(Long seq) {
+        pointRepository.deleteById(seq);
     }
 }
