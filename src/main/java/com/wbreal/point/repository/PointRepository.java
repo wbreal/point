@@ -1,5 +1,6 @@
 package com.wbreal.point.repository;
 
+import com.wbreal.point.constants.PointActionType;
 import com.wbreal.point.entity.PointEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +20,7 @@ public interface PointRepository extends JpaRepository<PointEntity, Long> {
                     "WHERE p.member_id = :memberId", nativeQuery = true)
     BigDecimal findRemainPointByMemberId(@Param("memberId") final Long memberId);
 
-    List<PointEntity> findAllPointByMemberIdOrderBySeqDesc(final Long memberId, final Pageable pageable);
+    List<PointEntity> findAllPointByMemberIdOrderBySeq(final Long memberId, final Pageable pageable);
 
+    List<PointEntity> findAllPointByMemberIdOrderByExpireDate(final Long memberId);
 }

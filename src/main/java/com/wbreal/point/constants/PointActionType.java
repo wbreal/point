@@ -7,8 +7,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PointActionType {
-    USE,
-    SAVE;
+    EARN,
+    USE;
 
     @JsonCreator
     public static PointActionType getInstance(String s) {

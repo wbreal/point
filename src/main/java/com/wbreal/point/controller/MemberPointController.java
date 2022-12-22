@@ -60,22 +60,35 @@ public class MemberPointController {
      */
     @GetMapping(value = "/{memberId}/points", produces = "application/json; charset=utf8")
     public ResponseEntity<List<PointResponse>> getPoints(@PathVariable final Long memberId,
-                                                         @PageableDefault(size = 20, sort = "seq", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                         @PageableDefault(size = 20, sort = "seq", direction = Sort.Direction.ASC) Pageable pageable) {
         this.isMember(memberId);
         return ResponseEntity.ok(pointService.getPoints(memberId, pageable));
     }
 
     /**
-     * 회원별 포인트 적립/사용
+     * 회원별 포인트 적립
      * @param memberId
      * @param pointRequest
      * 적립된 포인트의 사용기간 구현 (1년)
      */
-    @PostMapping(value = "/{memberId}/point", produces = "application/json; charset=utf8")
-    public ResponseEntity<PointResponse> postPoint(@PathVariable final Long memberId,
-                                                   @RequestBody @Validated PointRequest pointRequest) {
+    @PostMapping(value = "/{memberId}/points/earn", produces = "application/json; charset=utf8")
+    public ResponseEntity<PointResponse> postPointsEarn(@PathVariable final Long memberId,
+                                                        @RequestBody @Validated final PointRequest pointRequest) {
         this.isMember(memberId);
-        return ResponseEntity.ok(pointService.postPoint(memberId, pointRequest));
+        return ResponseEntity.ok(pointService.postPointEarn(memberId, pointRequest.getPoint()));
+    }
+
+    /**
+     * 회원별 포인트 사용
+     * @param memberId
+     * @param pointRequest
+     * 적립된 포인트의 사용기간 구현 (1년)
+     */
+    @PostMapping(value = "/{memberId}/points/use", produces = "application/json; charset=utf8")
+    public ResponseEntity<List<PointResponse>> postPointsUse(@PathVariable final Long memberId,
+                                                             @RequestBody @Validated final PointRequest pointRequest) {
+        this.isMember(memberId);
+        return ResponseEntity.ok(pointService.postPointUse(memberId, pointRequest.getPoint()));
     }
 
     /**

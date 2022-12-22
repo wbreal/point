@@ -1,7 +1,6 @@
 package com.wbreal.point.entity;
 
 import com.wbreal.point.constants.PointActionType;
-import com.wbreal.point.model.request.PointRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,7 +43,6 @@ public class PointEntity {
 	private BigDecimal point;
 
 	@Column(name = "remain_point")
-	@Getter
 	private BigDecimal remainPoint;
 
 	@Column(name = "parent_seq")
@@ -59,18 +57,38 @@ public class PointEntity {
 	@Column(name = "expire_date")
 	private LocalDate expireDate;
 
-	public static PointEntity convertTo(Long memberId, PointRequest pointRequest) {
+	public static PointEntity earnInsertOf(final Long memberId, final BigDecimal earnPoint) {
 		return PointEntity.builder()
 				.memberId(memberId)
-				.pointActionType(pointRequest.getPointActionType())
-				.point(pointRequest.getPoint())
-				.remainPoint(pointRequest.getPointActionType() == PointActionType.SAVE ? pointRequest.getPoint() : null)
+				.pointActionType(PointActionType.EARN)
+				.point(earnPoint)
+				.remainPoint(earnPoint)
 				.parentSeq(null)
 				.registDate(LocalDate.now())
 				.updateDate(LocalDate.now())
-				.expireDate(LocalDate.now().plusYears(1))
+				.expireDate(LocalDate.now().plusYears(1L))
 				.build();
+	};
 
+	public static PointEntity useUpdateOf(Long seq, BigDecimal remainPoint) {
+		return PointEntity.builder()
+				.seq(seq)
+				.remainPoint(remainPoint)
+				.updateDate(LocalDate.now())
+				.build();
+	}
+
+	public static PointEntity useInsertOf(final Long memberId, final BigDecimal usePoint, Long parentSeq) {
+		return PointEntity.builder()
+				.memberId(memberId)
+				.pointActionType(PointActionType.USE)
+				.point(usePoint)
+				.remainPoint(null)
+				.parentSeq(parentSeq)
+				.registDate(LocalDate.now())
+				.updateDate(LocalDate.now())
+				.expireDate(null)
+				.build();
 	};
 
 }

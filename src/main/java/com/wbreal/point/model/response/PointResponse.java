@@ -32,7 +32,7 @@ public class PointResponse {
 
     private LocalDate expireDate;
 
-    public static PointResponse convertTo(final PointEntity pointEntity) {
+    public static PointResponse selectOf(final PointEntity pointEntity) {
         return PointResponse.builder()
                 .seq(pointEntity.getSeq())
                 .memberId(pointEntity.getMemberId())
