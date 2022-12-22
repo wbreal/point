@@ -22,5 +22,5 @@ public interface PointRepository extends JpaRepository<PointEntity, Long> {
 
     List<PointEntity> findAllPointByMemberIdOrderBySeq(final Long memberId, final Pageable pageable);
 
-    List<PointEntity> findAllPointByMemberIdOrderByExpireDate(final Long memberId);
+    List<PointEntity> findAllByMemberIdOrderByExpireDate(final Long memberId);
 }

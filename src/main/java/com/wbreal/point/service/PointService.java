@@ -45,14 +45,14 @@ public class PointService {
         final BigDecimal remainPoints = pointRepository.findRemainPointByMemberId(memberId);
         if (remainPoints.compareTo(usePoint) < 0) throw new IllegalStateException("사용 가능한 포인트가 없습니다.");
 
-        List<PointEntity> pointEntities = pointRepository.findAllPointByMemberIdOrderByExpireDate(memberId)
+        List<PointEntity> pointEntities = pointRepository.findAllByMemberIdOrderByExpireDate(memberId)
                 .stream()
                 .filter(pointEntity -> pointEntity.getPointActionType() == PointActionType.EARN
-                        && pointEntity.getExpireDate().isBefore(LocalDate.now())
+                        && pointEntity.getExpireDate().isAfter(LocalDate.now())
                         && pointEntity.getRemainPoint().compareTo(BigDecimal.ZERO) > 0)
                 .collect(Collectors.toList());
 
-        List<PointResponse> pointResponses = null;
+        List<PointResponse> pointResponses = new ArrayList<>();
         BigDecimal subtractRemainPoint = usePoint; // 500
         for (PointEntity pointEntity : pointEntities) { // 800 // 500
             BigDecimal remainPoint = pointEntity.getRemainPoint().subtract(subtractRemainPoint);
@@ -65,7 +65,7 @@ public class PointService {
                 subtractRemainPoint = remainPoint;
                 remainPoint = BigDecimal.ZERO;
             }
-            pointRepository.save(PointEntity.useUpdateOf(pointEntity.getSeq(), remainPoint));
+            pointRepository.save(PointEntity.useUpdateOf(pointEntity, remainPoint));
             // 더 이상 차감해야할 포인트가 없는 경우 중단
             if (subtractRemainPoint.compareTo(BigDecimal.ZERO) >= 0) break;
         }
