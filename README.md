@@ -30,4 +30,4 @@
 
 ### DELETE http://localhost:8080/member/1/point/3
 
-#### - 취소 후 복구 기능 구현하지 못함
+#### - 취소 후 복구 기능 미구현
