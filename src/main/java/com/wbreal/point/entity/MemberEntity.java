@@ -1,13 +1,26 @@
 package com.wbreal.point.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @ToString
 @Entity
-@Table(schema = "musinsadb" ,name="member")
+@Table(schema = "db" ,name="member")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +28,9 @@ public class MemberEntity {
 	private Long memberId;
 
 	@Column(name = "regist_date")
-	private LocalDate registrationDate;
+	private LocalDateTime registDate;
 
 	@Column(name = "update_date")
-	private LocalDate updateDate;
+	private LocalDateTime updateDate;
 
 }

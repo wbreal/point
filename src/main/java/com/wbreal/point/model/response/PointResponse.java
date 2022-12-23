@@ -4,7 +4,7 @@ import com.wbreal.point.constants.PointActionType;
 import com.wbreal.point.entity.PointEntity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -26,11 +26,11 @@ public class PointResponse {
 
     private PointActionType pointActionType;
 
-    private LocalDate registDate;
+    private LocalDateTime registDate;
 
-    private LocalDate updateDate;
+    private LocalDateTime updateDate;
 
-    private LocalDate expireDate;
+    private LocalDateTime expireDate;
 
     public static PointResponse selectOf(final PointEntity pointEntity) {
         return PointResponse.builder()

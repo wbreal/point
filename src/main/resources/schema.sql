@@ -1,16 +1,16 @@
-DROP SCHEMA IF EXISTS musinsadb CASCADE;
+DROP SCHEMA IF EXISTS db CASCADE;
 
-CREATE SCHEMA IF NOT EXISTS musinsadb AUTHORIZATION sa;
+CREATE SCHEMA IF NOT EXISTS db AUTHORIZATION sa;
 
-CREATE TABLE musinsadb.member
+CREATE TABLE db.member
 (
-    member_id BIGINT NOT NULL COMMENT '회원 아이디',
+    member_id BIGINT NOT NULL AUTO_INCREMENT COMMENT '회원 아이디',
     regist_date DATE NOT NULL COMMENT '등록일시',
     update_date DATE NOT NULL COMMENT '수정일시',
     PRIMARY KEY (member_id)
 );
 
-CREATE TABLE musinsadb.point
+CREATE TABLE db.point
 (
     seq BIGINT NOT NULL AUTO_INCREMENT COMMENT '포인트 시퀀스',
     member_id BIGINT NOT NULL COMMENT '회원 아이디',

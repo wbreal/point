@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,8 @@ public class MemberPointController {
 
     /**
      * 회원 체크
+     * JPA 사용으로 Entity 단위로 진행되기에
+     * 회원 테이블을 직접 조회해서 유효한지 체크하는 서비스
      * @param memberId
      */
     private void isMember(Long memberId) {
@@ -71,11 +74,11 @@ public class MemberPointController {
      * @param pointRequest
      * 적립된 포인트의 사용기간 구현 (1년)
      */
-    @PostMapping(value = "/{memberId}/points/earn", produces = "application/json; charset=utf8")
-    public ResponseEntity<PointResponse> postPointsEarn(@PathVariable final Long memberId,
-                                                        @RequestBody @Validated final PointRequest pointRequest) {
+    @PostMapping(value = "/{memberId}/points", produces = "application/json; charset=utf8")
+    public ResponseEntity<PointResponse> earnPoint(@PathVariable final Long memberId,
+                                                   @RequestBody @Validated final PointRequest pointRequest) {
         this.isMember(memberId);
-        return ResponseEntity.ok(pointService.postPointEarn(memberId, pointRequest.getPoint()));
+        return ResponseEntity.ok(pointService.earnPoint(memberId, pointRequest.getPoint()));
     }
 
     /**
@@ -84,11 +87,11 @@ public class MemberPointController {
      * @param pointRequest
      * 적립된 포인트의 사용기간 구현 (1년)
      */
-    @PostMapping(value = "/{memberId}/points/use", produces = "application/json; charset=utf8")
-    public ResponseEntity<List<PointResponse>> postPointsUse(@PathVariable final Long memberId,
-                                                             @RequestBody @Validated final PointRequest pointRequest) {
+    @PutMapping(value = "/{memberId}/points", produces = "application/json; charset=utf8")
+    public ResponseEntity<List<PointResponse>> usePoint(@PathVariable final Long memberId,
+                                                        @RequestBody @Validated final PointRequest pointRequest) {
         this.isMember(memberId);
-        return ResponseEntity.ok(pointService.postPointUse(memberId, pointRequest.getPoint()));
+        return ResponseEntity.ok(pointService.usePoint(memberId, pointRequest.getPoint()));
     }
 
     /**

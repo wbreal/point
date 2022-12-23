@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +23,7 @@ public class PointService {
     private final PointRepository pointRepository;
 
     public RemainPointResponse getRemainPoint(final Long memberId) {
-        return RemainPointResponse.convertTo(pointRepository.findRemainPointByMemberId(memberId));
+        return RemainPointResponse.convertTo(memberId, pointRepository.findRemainPointByMemberId(memberId));
     }
 
     public List<PointResponse> getPoints(final Long memberId, Pageable pageable) {
@@ -37,21 +36,22 @@ public class PointService {
         return pointResponses;
     }
 
-    public PointResponse postPointEarn(Long memberId, BigDecimal earnPoint) {
+    public PointResponse earnPoint(Long memberId, BigDecimal earnPoint) {
         return PointResponse.selectOf(pointRepository.save(PointEntity.earnInsertOf(memberId, earnPoint)));
     }
 
-    public List<PointResponse> postPointUse(final Long memberId, final BigDecimal usePoint) {
+    public List<PointResponse> usePoint(final Long memberId, final BigDecimal usePoint) {
         final BigDecimal remainPoints = pointRepository.findRemainPointByMemberId(memberId);
         if (remainPoints.compareTo(usePoint) < 0) throw new IllegalStateException("사용 가능한 포인트가 없습니다.");
 
         // 적립 / 종료 안된 / 사용할수 있는 금액이 있는
-        List<PointEntity> pointEntities = pointRepository.findAllByMemberIdOrderByExpireDate(memberId)
+        List<PointEntity> pointEntities = pointRepository.findAllByMemberIdAndRemainPointGreaterThanAndExpireDateAfterAndPointActionTypeOrderByExpireDate(memberId, BigDecimal.ZERO, LocalDateTime.now(), PointActionType.EARN);
+        /*List<PointEntity> pointEntities = pointRepository.findAllByMemberIdOrderByExpireDate(memberId)
                 .stream()
                 .filter(pointEntity -> pointEntity.getPointActionType() == PointActionType.EARN
-                        && pointEntity.getExpireDate().isAfter(LocalDate.now())
+                        && pointEntity.getExpireDate().isAfter(LocalDateTime.now())
                         && pointEntity.getRemainPoint().compareTo(BigDecimal.ZERO) > 0)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
         List<PointResponse> pointResponses = new ArrayList<>();
 

@@ -16,11 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @ToString
 @Entity
-@Table(schema = "musinsadb", name = "point")
+@Table(schema = "db", name = "point")
 @Getter
 @Builder
 @AllArgsConstructor
@@ -49,13 +49,13 @@ public class PointEntity {
     private Long parentSeq;
 
     @Column(name = "regist_date")
-    private LocalDate registDate;
+    private LocalDateTime registDate;
 
     @Column(name = "update_date")
-    private LocalDate updateDate;
+    private LocalDateTime updateDate;
 
     @Column(name = "expire_date")
-    private LocalDate expireDate;
+    private LocalDateTime expireDate;
 
     public static PointEntity earnInsertOf(final Long memberId, final BigDecimal earnPoint) {
         return PointEntity.builder()
@@ -64,9 +64,9 @@ public class PointEntity {
                 .point(earnPoint)
                 .remainPoint(earnPoint)
                 .parentSeq(null)
-                .registDate(LocalDate.now())
-                .updateDate(LocalDate.now())
-                .expireDate(LocalDate.now().plusYears(1L))
+                .registDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .expireDate(LocalDateTime.now().plusYears(1L))
                 .build();
     }
 
@@ -93,8 +93,8 @@ public class PointEntity {
                 .point(usePoint)
                 .remainPoint(null)
                 .parentSeq(parentSeq)
-                .registDate(LocalDate.now())
-                .updateDate(LocalDate.now())
+                .registDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
                 .expireDate(null)
                 .build();
     }
