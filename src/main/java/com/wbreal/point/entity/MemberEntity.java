@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @ToString
 @Entity
-@Table(schema = "db" ,name="member")
+@Table(schema = "db", name = "member")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

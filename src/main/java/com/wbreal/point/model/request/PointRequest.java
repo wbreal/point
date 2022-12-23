@@ -1,6 +1,5 @@
 package com.wbreal.point.model.request;
 
-import com.wbreal.point.constants.PointActionType;
 import lombok.Getter;
 import lombok.ToString;
 

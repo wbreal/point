@@ -23,6 +23,7 @@ public interface PointRepository extends JpaRepository<PointEntity, Long> {
 
     List<PointEntity> findAllPointByMemberIdOrderBySeq(final Long memberId, final Pageable pageable);
 
+    // 리소스 낭비 및 성능저하 판단으로 기능을 쿼리로 처리 -> findAllByMemberIdAndRemainPointGreaterThanAndExpireDateAfterAndPointActionTypeOrderByExpireDate
     List<PointEntity> findAllByMemberIdOrderByExpireDate(final Long memberId);
 
     List<PointEntity> findAllByMemberIdAndRemainPointGreaterThanAndExpireDateAfterAndPointActionTypeOrderByExpireDate(final Long memberId, final BigDecimal remainPoint, final LocalDateTime expireDate, final PointActionType pointActionType);

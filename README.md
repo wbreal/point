@@ -1,75 +1,33 @@
-# point
-# GET http://localhost:8080/member/1/point
+# point project
 
-<> 2022-12-23T212401.200.json
-<> 2022-12-23T173421.200.json
-<> 2022-12-23T164919.200.json
-<> 2022-12-23T164846.500.json
-<> 2022-12-23T164827.500.json
-<> 2022-12-23T164550.200.json
-<> 2022-12-23T164500.200.json
-<> 2022-12-23T164310.200.json
-<> 2022-12-23T164308.200.json
-<> 2022-12-23T164303.200.json
-<> 2022-12-23T164259.200.json
-<> 2022-12-23T164202.404.json
-<> 2022-12-23T160615.200.json
+## 서버설정
 
-###
-# GET http://localhost:8080/member/1/points?page=0&size=10&sort=seq,desc
+### - 미구현
 
-<> 2022-12-23T215107.200.json
-<> 2022-12-23T212410.200.json
-<> 2022-12-23T173247.200.json
-<> 2022-12-23T173152.200.json
-<> 2022-12-23T165040.500.json
-<> 2022-12-23T165039.500.json
-<> 2022-12-23T164933.500.json
-<> 2022-12-23T164706.500.json
-<> 2022-12-23T160620.200.json
-<> 2022-12-23T160605.200.json
-<> 2022-12-23T155556.200.json
+## 단위 테스트 : generated-requests.http
 
-###
-# POST http://localhost:8080/member/1/points
-Content-Type: application/json
+## 통합 테스트 : PointRepositoryTest.java
+
+### GET http://localhost:8080/member/1/point
+
+### GET http://localhost:8080/member/1/points?page=0&size=10&sort=seq,desc
+
+### POST http://localhost:8080/member/1/points/earn
+
+#### Content-Type: application/json
 
 {
 "point": "1000"
 }
-<> 2022-12-23T215103.200.json
-<> 2022-12-23T212409.200.json
-<> 2022-12-23T173426.200.json
-<> 2022-12-23T173147.200.json
-<> 2022-12-23T173144.200.json
-<> 2022-12-23T173101.500.json
-<> 2022-12-23T173046.500.json
-<> 2022-12-23T173045.500.json
-<> 2022-12-23T173044.500.json
-<> 2022-12-23T164622.500.json
-<> 2022-12-23T160327.200.json
-<> 2022-12-23T160326.200.json
-<> 2022-12-23T155937.200.json
-<> 2022-12-23T155936.200.json
-<> 2022-12-23T155552.200.json
-<> 2022-12-23T155550.200.json
-<> 2022-12-23T155359.200.json
-<> 2022-12-22T045719.200.json
-<> 2022-12-21T175400.500.json
 
-###
-# PUT http://localhost:8080/member/1/points
-Content-Type: application/json
+### POST http://localhost:8080/member/1/points/use
+
+#### Content-Type: application/json
 
 {
 "point": "1500"
 }
 
-<> 2022-12-23T173721.200.json
-<> 2022-12-23T173242.200.json
-<> 2022-12-23T160552.200.json
-<> 2022-12-23T160302.200.json
-<> 2022-12-23T155919.200.json
+### DELETE http://localhost:8080/member/1/point/3
 
-###
-# DELETE http://localhost:8080/member/1/point/3
+#### - 취소 후 복구 기능 구현하지 못함

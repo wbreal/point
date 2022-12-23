@@ -70,8 +70,6 @@ public class PointEntity {
                 .build();
     }
 
-    ;
-
     public static PointEntity useUpdateOf(final PointEntity pointEntity, final BigDecimal remainPoint) {
         return PointEntity.builder()
                 .seq(pointEntity.getSeq())
@@ -98,7 +96,5 @@ public class PointEntity {
                 .expireDate(null)
                 .build();
     }
-
-    ;
 
 }

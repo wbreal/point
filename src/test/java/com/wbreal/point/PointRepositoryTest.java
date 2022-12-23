@@ -59,7 +59,7 @@ class PointRepositoryTest {
         BigDecimal remainPoint = pointRepository.findRemainPointByMemberId(saveMember.getMemberId());
 
         // Then
-        assertTrue(REMAIN_POINT.compareTo(remainPoint) == 0);
+        assertEquals(0, REMAIN_POINT.compareTo(remainPoint));
     }
 
     @Test

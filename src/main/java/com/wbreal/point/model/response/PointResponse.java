@@ -2,13 +2,12 @@ package com.wbreal.point.model.response;
 
 import com.wbreal.point.constants.PointActionType;
 import com.wbreal.point.entity.PointEntity;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @ToString
 @Builder

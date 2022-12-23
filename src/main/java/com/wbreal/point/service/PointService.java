@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -36,16 +37,20 @@ public class PointService {
         return pointResponses;
     }
 
+    @Transactional
     public PointResponse earnPoint(Long memberId, BigDecimal earnPoint) {
         return PointResponse.selectOf(pointRepository.save(PointEntity.earnInsertOf(memberId, earnPoint)));
     }
 
+    @Transactional
     public List<PointResponse> usePoint(final Long memberId, final BigDecimal usePoint) {
         final BigDecimal remainPoints = pointRepository.findRemainPointByMemberId(memberId);
         if (remainPoints.compareTo(usePoint) < 0) throw new IllegalStateException("사용 가능한 포인트가 없습니다.");
 
         // 적립 / 종료 안된 / 사용할수 있는 금액이 있는
         List<PointEntity> pointEntities = pointRepository.findAllByMemberIdAndRemainPointGreaterThanAndExpireDateAfterAndPointActionTypeOrderByExpireDate(memberId, BigDecimal.ZERO, LocalDateTime.now(), PointActionType.EARN);
+
+        // 리소스 낭비 및 성능저하 판단으로 기능을 쿼리로 처리
         /*List<PointEntity> pointEntities = pointRepository.findAllByMemberIdOrderByExpireDate(memberId)
                 .stream()
                 .filter(pointEntity -> pointEntity.getPointActionType() == PointActionType.EARN
@@ -80,13 +85,12 @@ public class PointService {
         }
 
 
-
-
         return pointResponses;
     }
 
-
+    @Transactional
     public void deletePoint(Long seq) {
+        // TODO : 사용 처리 된 포인트를 찾아서 복구하는 기능 구현 필요
         pointRepository.deleteById(seq);
     }
 }
